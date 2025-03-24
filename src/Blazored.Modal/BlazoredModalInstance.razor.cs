@@ -1,5 +1,6 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
@@ -14,6 +15,8 @@ public partial class BlazoredModalInstance : IDisposable
     [Parameter, EditorRequired] public ModalOptions Options { get; set; } = default!;
     [Parameter] public string? Title { get; set; }
     [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ILogger<BlazoredModalInstance> Logger { get; set; } = default!;
 
     private string? Position { get; set; }
     private string? ModalClass { get; set; }
@@ -112,15 +115,13 @@ public partial class BlazoredModalInstance : IDisposable
 
                 await Task.Delay(400);
             }
+
+            await Parent.DismissInstance(Id, modalResult);
         }
         catch(Exception ex)
         {
-            Debug.WriteLine(ex.ToString());
-        }
-        finally
-        {
-            await Parent.DismissInstance(Id, modalResult);
-        }        
+            Logger.LogError(ex.ToString());
+        }    
     }
 
     /// <summary>
