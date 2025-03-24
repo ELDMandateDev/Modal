@@ -14,7 +14,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <!-- NuGet settings -->
-    <PackageId>Blazored.Modal</PackageId>
+    <PackageId>EldMandate.Blazored.Modal</PackageId>
     <PackageTags>Blazored;Blazor;Razor;Components;Modal;Dialogue;ASP.NET Core;CSharp;Web</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Blazored/Modal</PackageProjectUrl>
