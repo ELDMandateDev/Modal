@@ -1,5 +1,6 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Blazored.Modal;
@@ -94,23 +95,33 @@ public partial class BlazoredModalInstance : IDisposable
     /// <param name="modalResult"></param>
     public async Task CloseAsync(ModalResult modalResult)
     {
-        // Fade out the modal, and after that actually remove it
-        if (AnimationType is ModalAnimationType.FadeInOut)
+        try
         {
-            OverlayAnimationClass += " fade-out";
-            StateHasChanged();
-            
-            await Task.Delay(400); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
+            // Fade out the modal, and after that actually remove it
+            if (AnimationType is ModalAnimationType.FadeInOut)
+            {
+                OverlayAnimationClass += " fade-out";
+                StateHasChanged();
+
+                await Task.Delay(400); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
+            }
+            else if (AnimationType is ModalAnimationType.PopInOut)
+            {
+                OverlayAnimationClass += " pop-out";
+                StateHasChanged();
+
+                await Task.Delay(400);
+            }
         }
-        else if (AnimationType is ModalAnimationType.PopInOut)
+        catch(Exception ex)
         {
-            OverlayAnimationClass += " pop-out";
-            StateHasChanged();
-
-            await Task.Delay(400);
+            Debug.WriteLine(ex.ToString());
         }
-
-        await Parent.DismissInstance(Id, modalResult);
+        finally
+        {
+            await Parent.DismissInstance(Id, modalResult);
+        }
+        
     }
 
     /// <summary>
