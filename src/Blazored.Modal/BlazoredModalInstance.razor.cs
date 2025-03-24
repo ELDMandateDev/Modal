@@ -120,8 +120,7 @@ public partial class BlazoredModalInstance : IDisposable
         finally
         {
             await Parent.DismissInstance(Id, modalResult);
-        }
-        
+        }        
     }
 
     /// <summary>
