@@ -103,7 +103,7 @@ public partial class BlazoredModalInstance : IDisposable
             // Fade out the modal, and after that actually remove it
             if (AnimationType is ModalAnimationType.FadeInOut)
             {
-                OverlayAnimationClass += " fade-out";
+                OverlayAnimationClass += " d-none fade-out";
                 StateHasChanged();
 
                 await Task.Delay(400); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
